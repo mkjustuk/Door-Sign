@@ -13,6 +13,8 @@
 //USER CONFIGURED SECTION START//
 //UPDATE THESE TO BE CORRECT BEFORE COMPILING
 
+//Update the first two MAP values in line 136 to get an accurate % battery output
+
 const char* ssid = "SSID"; // your router ssid here
 const char* password = "PASS"; // your router password here
 const char* mqtt_server = "x.x.x.x"; // the ip address of your MQTT broker
@@ -133,7 +135,7 @@ void setup()
 //Read, package and then send via the topic OfficeSign/status, the voltage of the battery at this time
 void sendInfoSign()
 {
-  volt = map(analogRead(A0), 1,1023,0,100);
+  volt = map(analogRead(A0),600,970,0,100);  //You may need to update these for different battery capacities - this is based on 4000mah
   char charBatt[] = "00.0";
   dtostrf(volt, 4, 1, charBatt);
   client.publish("OfficeSign/status", charBatt); //Send the voltage % on an MQTT status topic
